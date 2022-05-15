@@ -145,7 +145,7 @@
       * [Поля вывода](veb-freimovorki/flask-rasshireniya/flask-restful/rukovodstvo-polzovatelya-flask-restful/polya-vyvoda.md)
       * [Расширение Flask-RESTful](veb-freimovorki/flask-rasshireniya/flask-restful/rukovodstvo-polzovatelya-flask-restful/rasshirenie-flask-restful.md)
       * [Промежуточное использование](veb-freimovorki/flask-rasshireniya/flask-restful/rukovodstvo-polzovatelya-flask-restful/promezhutochnoe-ispolzovanie.md)
-    * [Справка API Flask-RESTful](veb-freimovorki/flask-rasshireniya/flask-restful/spravka-api-flask-restful/README.md)
+    * [Справка API Flask-RESTful](veb-freimovorki/flask-rasshireniya/flask-restful/spravka-api-flask-restful.md)
       * [Функции и декораторы](veb-freimovorki/flask-rasshireniya/flask-restful/spravka-api-flask-restful/funkcii-i-dekoratory.md)
       * [Api](veb-freimovorki/flask-rasshireniya/flask-restful/spravka-api-flask-restful/api.md)
       * [ReqParse](veb-freimovorki/flask-rasshireniya/flask-restful/spravka-api-flask-restful/reqparse.md)
