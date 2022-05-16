@@ -79,7 +79,7 @@ app.register_blueprint(api_bp)
 ```
 
 {% hint style="info" %}
-Вызов <mark style="color:red;">Api.init\_app()</mark> здесь не требуется, поскольку регистрация схемы в приложении обеспечивает настройку маршрутизации для приложения.
+Вызов [Api.init\_app()](../spravka-api-flask-restful/api.md#init\_app) здесь не требуется, поскольку регистрация схемы в приложении обеспечивает настройку маршрутизации для приложения.
 {% endhint %}
 
 ## Пример полного анализа параметров
@@ -200,7 +200,7 @@ user_fields = {
 
 Это поле в основном используется для интерполяции значений из ответа в другие значения. В этом случае **custom\_greeting** всегда будет содержать значение, возвращаемое из поля **username**.
 
-Затем проверьте <mark style="color:red;">fields.Nested</mark>.
+Затем проверьте [fields.Nested](../spravka-api-flask-restful/polya-fields.md#nested).
 
 ```python
 'links': fields.Nested({
@@ -209,9 +209,9 @@ user_fields = {
 }),
 ```
 
-Это поле используется для создания подобъекта в ответе. В этом случае мы хотим создать подобъект ссылок, содержащий URL-адреса связанных объектов. Обратите внимание, что мы передали **fields.Nested** еще один **dict**, который построен таким образом, что сам по себе является приемлемым аргументом для <mark style="color:red;">marshal()</mark>.
+Это поле используется для создания подобъекта в ответе. В этом случае мы хотим создать подобъект ссылок, содержащий URL-адреса связанных объектов. Обратите внимание, что мы передали **fields.Nested** еще один **dict**, который построен таким образом, что сам по себе является приемлемым аргументом для [marshal()](../spravka-api-flask-restful/funkcii-i-dekoratory.md#marshal).
 
-Наконец, мы использовали тип поля <mark style="color:red;">fields.Url</mark>.
+Наконец, мы использовали тип поля [fields.Url](../spravka-api-flask-restful/polya-fields.md#url).
 
 ```python
 'friends': fields.Url('user_friends', absolute=True),
@@ -222,9 +222,9 @@ user_fields = {
 
 ## Передача параметров конструктора в ресурсы
 
-Реализация <mark style="color:red;">Resource</mark> может потребовать внешних зависимостей. Эти зависимости лучше всего передавать через конструктор, чтобы слабо связать друг друга. Метод <mark style="color:red;">Api.add\_resource()</mark> имеет два аргумента ключевого слова: **resource\_class\_args** и **resource\_class\_kwargs**. Их значения будут перенаправлены и переданы в конструктор реализации вашего ресурса.
+Реализация [Resource](../spravka-api-flask-restful/api.md#resource) может потребовать внешних зависимостей. Эти зависимости лучше всего передавать через конструктор, чтобы слабо связать друг друга. Метод [Api.add\_resource()](../spravka-api-flask-restful/api.md#add\_resource) имеет два аргумента ключевого слова: **resource\_class\_args** и **resource\_class\_kwargs**. Их значения будут перенаправлены и переданы в конструктор реализации вашего ресурса.
 
-Итак, у вас может быть <mark style="color:red;">Resource</mark>:
+Итак, у вас может быть [Resource](../spravka-api-flask-restful/api.md#resource):
 
 ```python
 from flask_restful import Resource
