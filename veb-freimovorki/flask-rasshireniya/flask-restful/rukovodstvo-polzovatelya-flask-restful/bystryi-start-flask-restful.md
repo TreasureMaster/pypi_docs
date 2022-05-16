@@ -117,7 +117,7 @@ class Todo3(Resource):
 
 ## Конечные точки (endpoints)
 
-Много раз в API ваш ресурс будет иметь несколько URL-адресов. Вы можете передать несколько URL-адресов методу <mark style="color:red;">add\_resource()</mark> объекта **API**. Каждый будет перенаправлен на ваш ресурс <mark style="color:red;">Resource</mark>.
+Много раз в API ваш ресурс будет иметь несколько URL-адресов. Вы можете передать несколько URL-адресов методу [add\_resource()](../spravka-api-flask-restful/api.md#add\_resource) объекта **API**. Каждый будет перенаправлен на ваш ресурс [Resource](../spravka-api-flask-restful/api.md#resource).
 
 ```python
 api.add_resource(HelloWorld,
@@ -148,14 +148,14 @@ args = parser.parse_args()
 В отличие от модуля **argparse**, <mark style="color:red;">reqparse.RequestParser.parse\_args()</mark> возвращает словарь Python вместо пользовательской структуры данных.
 {% endhint %}
 
-Использование модуля <mark style="color:red;">reqparse</mark> также дает вам разумные сообщения об ошибках бесплатно. Если аргумент не проходит проверку, **Flask-RESTful** ответит ошибкой **400 Bad Request** и ответом с указанием ошибки.
+Использование модуля [reqparse](../spravka-api-flask-restful/reqparse.md) также дает вам разумные сообщения об ошибках бесплатно. Если аргумент не проходит проверку, **Flask-RESTful** ответит ошибкой **400 Bad Request** и ответом с указанием ошибки.
 
 ```bash
 $ curl -d 'rate=foo' http://127.0.0.1:5000/todos
 {'status': 400, 'message': 'foo cannot be converted to int'}
 ```
 
-Модуль <mark style="color:red;">inputs</mark> предоставляет ряд встроенных общих функций преобразования, таких как <mark style="color:red;">inputs.date()</mark> и <mark style="color:red;">inputs.url()</mark>.
+Модуль [inputs](../spravka-api-flask-restful/vkhodnye-dannye-inputs.md) предоставляет ряд встроенных общих функций преобразования, таких как [inputs.date()](../spravka-api-flask-restful/vkhodnye-dannye-inputs.md#date) и [inputs.url()](../spravka-api-flask-restful/vkhodnye-dannye-inputs.md#url).
 
 Вызов **parse\_args** со `strict=True` гарантирует, что будет выдано сообщение об ошибке, если запрос включает аргументы, которые не определены вашим синтаксическим анализатором.
 
@@ -165,7 +165,7 @@ args = parser.parse_args(strict=True)
 
 ## Форматирование данных
 
-По умолчанию все поля в вашей возвращаемой итерации будут отображаться как есть. Хотя это прекрасно работает, когда вы имеете дело только со структурами данных Python, это может сильно разочаровать при работе с объектами. Чтобы решить эту проблему, **Flask-RESTful** предоставляет модуль <mark style="color:red;">fields</mark> и декоратор <mark style="color:red;">marshal\_with()</mark>. Подобно **Django ORM** и **WTForm**, вы используете модуль **fields** для описания структуры вашего ответа.
+По умолчанию все поля в вашей возвращаемой итерации будут отображаться как есть. Хотя это прекрасно работает, когда вы имеете дело только со структурами данных Python, это может сильно разочаровать при работе с объектами. Чтобы решить эту проблему, **Flask-RESTful** предоставляет модуль [fields](../spravka-api-flask-restful/polya-fields.md) и декоратор [marshal\_with()](../spravka-api-flask-restful/funkcii-i-dekoratory.md#marshal\_with). Подобно **Django ORM** и **WTForm**, вы используете модуль **fields** для описания структуры вашего ответа.
 
 ```python
 from flask_restful import fields, marshal_with
@@ -189,7 +189,7 @@ class Todo(Resource):
         return TodoDao(todo_id='my_todo', task='Remember the milk')
 ```
 
-В приведенном выше примере объект Python берется и подготавливается к сериализации. Декоратор <mark style="color:red;">marshal\_with()</mark> применит преобразование, описанное в **resource\_fields**. Единственным полем, извлекаемым из объекта, является задача. Поле <mark style="color:red;">fields.Url</mark> — это специальное поле, которое принимает имя конечной точки и генерирует URL-адрес для этой конечной точки в ответе. Многие из необходимых вам типов полей уже включены. Полный список см. в руководстве по <mark style="color:red;">fields</mark>.
+В приведенном выше примере объект Python берется и подготавливается к сериализации. Декоратор [marshal\_with()](../spravka-api-flask-restful/funkcii-i-dekoratory.md#marshal\_with) применит преобразование, описанное в **resource\_fields**. Единственным полем, извлекаемым из объекта, является задача. Поле [fields.Url](../spravka-api-flask-restful/polya-fields.md#url) — это специальное поле, которое принимает имя конечной точки и генерирует URL-адрес для этой конечной точки в ответе. Многие из необходимых вам типов полей уже включены. Полный список см. в руководстве по [fields](../spravka-api-flask-restful/polya-fields.md).
 
 ## Полный пример
 
