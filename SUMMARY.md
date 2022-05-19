@@ -153,6 +153,7 @@
       * [Входные данные Inputs](veb-freimovorki/flask-rasshireniya/flask-restful/spravka-api-flask-restful/vkhodnye-dannye-inputs.md)
     * [Дополнительные примечания Flask-RESTful](veb-freimovorki/flask-rasshireniya/flask-restful/dopolnitelnye-primechaniya-flask-restful.md)
   * [Flask-Session](veb-freimovorki/flask-rasshireniya/flask-session.md)
+  * [Flask-SQLAlchemy](veb-freimovorki/flask-rasshireniya/flask-sqlalchemy.md)
   * [Flask-WTF](veb-freimovorki/flask-rasshireniya/flask-wtf/README.md)
     * [User's Guide](veb-freimovorki/flask-rasshireniya/flask-wtf/users-guide/README.md)
       * [Установка](veb-freimovorki/flask-rasshireniya/flask-wtf/users-guide/ustanovka.md)
