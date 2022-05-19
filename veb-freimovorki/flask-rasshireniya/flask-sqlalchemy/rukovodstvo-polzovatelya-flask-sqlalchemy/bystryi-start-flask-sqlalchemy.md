@@ -1,0 +1,2 @@
+# Быстрый старт Flask-SQLAlchemy
+
