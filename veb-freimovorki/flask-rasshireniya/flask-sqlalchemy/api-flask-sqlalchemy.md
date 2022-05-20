@@ -265,4 +265,44 @@ _Новое в версии 2.1_: добавлена опция привязки
 
 элементы для текущей страницы
 
-### `iter_pages`(_left\_edge=2_, _left\_current=2_, _right\_current=5_, _right\_edge=2_)
+### iter\_pages(_left\_edge=2_, _left\_current=2_, _right\_current=5_, _right\_edge=2_)
+
+Перебирает номера страниц в разбиении на страницы. Четыре параметра контролируют пороги количества чисел, которые должны быть получены из сторон. Номера пропущенных страниц представлены как `None`. Вот как вы можете отобразить такую разбивку на страницы в шаблонах:
+
+```python
+{% raw %}
+{% macro render_pagination(pagination, endpoint) %}
+  <div class=pagination>
+  {%- for page in pagination.iter_pages() %}
+    {% if page %}
+      {% if page != pagination.page %}
+        <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+      {% else %}
+        <strong>{{ page }}</strong>
+      {% endif %}
+    {% else %}
+      <span class=ellipsis>…</span>
+    {% endif %}
+  {%- endfor %}
+  </div>
+{% endmacro %}
+{% endraw %}
+```
+
+### next(_error\_out=False_)
+
+Возвращает объект [Pagination](api-flask-sqlalchemy.md#pagination) для следующей страницы.
+
+### next\_num
+
+Номер следующей страницы
+
+### page _= None_
+
+текущий номер страницы (1 проиндексирована)
+
+### pages
+
+Общее количество страниц
+
+### `per_page` _= None_
