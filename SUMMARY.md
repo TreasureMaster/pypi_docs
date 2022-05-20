@@ -132,6 +132,8 @@
     * [User's Guide Flask-Mail](veb-freimovorki/flask-rasshireniya/flask-mail/users-guide-flask-mail.md)
     * [API Flask-Mail](veb-freimovorki/flask-rasshireniya/flask-mail/api-flask-mail.md)
     * [Журнал изменений](veb-freimovorki/flask-rasshireniya/flask-mail/zhurnal-izmenenii.md)
+  * [Flask-Marshmallow](veb-freimovorki/flask-rasshireniya/flask-marshmallow.md)
+  * [Flask-Migrate](veb-freimovorki/flask-rasshireniya/flask-migrate.md)
   * [Flask-Nav](veb-freimovorki/flask-rasshireniya/flask-nav/README.md)
     * [Начало работы Flask-Nav](veb-freimovorki/flask-rasshireniya/flask-nav/nachalo-raboty-flask-nav.md)
     * [Дополнительные темы](veb-freimovorki/flask-rasshireniya/flask-nav/dopolnitelnye-temy.md)
