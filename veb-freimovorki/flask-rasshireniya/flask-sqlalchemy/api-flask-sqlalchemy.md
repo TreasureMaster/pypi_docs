@@ -26,7 +26,7 @@ def create_app():
     return app
 ```
 
-Разница между ними заключается в том, что в первом случае такие методы, как <mark style="color:red;">create\_all()</mark> и <mark style="color:red;">drop\_all()</mark>, будут работать постоянно, а во втором случае должен существовать [flask.Flask.app\_context()](https://flask.palletsprojects.com/en/2.0.x/api/#flask.Flask.app\_context).
+Разница между ними заключается в том, что в первом случае такие методы, как [create\_all()](api-flask-sqlalchemy.md#create\_all-bind-\_\_all\_\_-app-none) и [drop\_all()](api-flask-sqlalchemy.md#drop\_all-bind-\_\_all\_\_-app-none), будут работать постоянно, а во втором случае должен существовать [flask.Flask.app\_context()](https://flask.palletsprojects.com/en/2.0.x/api/#flask.Flask.app\_context).
 
 По умолчанию Flask-SQLAlchemy применяет некоторые настройки, специфичные для серверной части, чтобы улучшить работу с ними.
 
@@ -40,7 +40,7 @@ class User(db.Model):
     pw_hash = db.Column(db.String(80))
 ```
 
-Вы по-прежнему можете использовать **sqlalchemy** и **sqlalchemy.orm** напрямую, но обратите внимание, что настройки Flask-SQLAlchemy доступны только через экземпляр этого класса [SQLAlchemy](api-flask-sqlalchemy.md#sqlalchemy). Классами запросов по умолчанию являются <mark style="color:red;">BaseQuery</mark> для `db.Query`, `db.Model.query_class` и `query_class` по умолчанию для `db.relationship` и `db.backref`. Если вы используете эти интерфейсы напрямую через **sqlalchemy** и **sqlalchemy.orm**, классом запроса по умолчанию будет класс **sqlalchemy**.
+Вы по-прежнему можете использовать **sqlalchemy** и **sqlalchemy.orm** напрямую, но обратите внимание, что настройки Flask-SQLAlchemy доступны только через экземпляр этого класса [SQLAlchemy](api-flask-sqlalchemy.md#sqlalchemy). Классами запросов по умолчанию являются [BaseQuery](api-flask-sqlalchemy.md#basequery) для `db.Query`, `db.Model.query_class` и `query_class` по умолчанию для `db.relationship` и `db.backref`. Если вы используете эти интерфейсы напрямую через **sqlalchemy** и **sqlalchemy.orm**, классом запроса по умолчанию будет класс **sqlalchemy**.
 
 {% hint style="info" %}
 **Тщательно проверяйте типы**
@@ -58,9 +58,9 @@ _Новое в версии 0.16_: **scopefunc** теперь принимает
 
 _Новое в версии 2.1_: Добавлен параметр **metadata**. Это позволяет устанавливать пользовательские соглашения об именах среди других нетривиальных вещей.
 
-Параметр **query\_class** был добавлен, чтобы разрешить настройку класса запроса вместо значения по умолчанию <mark style="color:red;">BaseQuery</mark>.
+Параметр **query\_class** был добавлен, чтобы разрешить настройку класса запроса вместо значения по умолчанию [BaseQuery](api-flask-sqlalchemy.md#basequery).
 
-Был добавлен параметр **model\_class**, который позволяет использовать пользовательский класс модели вместо <mark style="color:red;">Model</mark>.
+Был добавлен параметр **model\_class**, который позволяет использовать пользовательский класс модели вместо [Model](api-flask-sqlalchemy.md#model).
 
 _Изменено в версии 2.1_: используйте один и тот же класс запроса в сеансе **session**, **Model.query** и **Query**.
 
@@ -72,7 +72,7 @@ _Изменено в версии 2.4.3_: `COMMIT_ON_TEARDOWN` <mark style="colo
 
 ### Query_= None_
 
-Класс запросов по умолчанию, используемый **Model.query** и другими запросами. Настройте это, передав **query\_class** в [SQLAlchemy()](api-flask-sqlalchemy.md#sqlalchemy). По умолчанию используется <mark style="color:red;">BaseQuery</mark>.
+Класс запросов по умолчанию, используемый **Model.query** и другими запросами. Настройте это, передав **query\_class** в [SQLAlchemy()](api-flask-sqlalchemy.md#sqlalchemy). По умолчанию используется [BaseQuery](api-flask-sqlalchemy.md#basequery).
 
 ### apply\_driver\_hacks(_app_, _sa\_url_, _options_)
 
@@ -116,7 +116,7 @@ _Изменено в версии 0.12_: Добавлены параметры
 
 Допустимые фабрики включают класс [Session](https://docs.sqlalchemy.org/en/14/orm/session\_api.html#sqlalchemy.orm.Session) или [sessionmaker](https://docs.sqlalchemy.org/en/14/orm/session\_api.html#sqlalchemy.orm.sessionmaker).
 
-Реализация по умолчанию создает **sessionmaker** для <mark style="color:red;">SignallingSession</mark>.
+Реализация по умолчанию создает **sessionmaker** для [SignallingSession](api-flask-sqlalchemy.md#signallingsession).
 
 #### Параметры:
 
@@ -225,7 +225,7 @@ _Изменено в версии 0.12_: Добавлены параметры
 
 Когда **error\_out** имеет значение `False`, значения **page** и **per\_page** по умолчанию равны 1 и 20 соответственно.
 
-Возвращает объект <mark style="color:red;">Pagination</mark>.
+Возвращает объект [Pagination](api-flask-sqlalchemy.md#pagination).
 
 ## Сессии
 
@@ -251,7 +251,7 @@ _Новое в версии 2.1_: добавлена опция привязки
 
 #### _class_ flask\_sqlalchemy.Pagination(_query_, _page_, _per\_page_, _total_, _items_)
 
-Внутренний вспомогательный класс, возвращаемый [BaseQuery.paginate()](api-flask-sqlalchemy.md#paginate-page-none-per\_page-none-error\_out-true-max\_per\_page-none). Вы также можете создать его из любого другого объекта запроса SQLAlchemy, если вы работаете с другими библиотеками. Кроме того, в качестве объекта запроса можно передать `None`, и в этом случае функции <mark style="color:red;">prev()</mark> и <mark style="color:red;">next()</mark> больше не будут работать.
+Внутренний вспомогательный класс, возвращаемый [BaseQuery.paginate()](api-flask-sqlalchemy.md#paginate-page-none-per\_page-none-error\_out-true-max\_per\_page-none). Вы также можете создать его из любого другого объекта запроса SQLAlchemy, если вы работаете с другими библиотеками. Кроме того, в качестве объекта запроса можно передать `None`, и в этом случае функции [prev()](api-flask-sqlalchemy.md#prev-error\_out-false) и [next()](api-flask-sqlalchemy.md#next-error\_out-false) больше не будут работать.
 
 ### has\_next
 
@@ -309,7 +309,7 @@ _Новое в версии 2.1_: добавлена опция привязки
 
 количество элементов, отображаемых на странице.
 
-### `prev`(_error\_out=False_)
+### prev(_error\_out=False_)
 
 Возвращает объект [Pagination](api-flask-sqlalchemy.md#pagination) для предыдущей страницы.
 
@@ -317,11 +317,11 @@ _Новое в версии 2.1_: добавлена опция привязки
 
 Номер предыдущей страницы.
 
-### `query` _= None_
+### query _= None_
 
 неограниченный объект запроса, который использовался для создания этого объекта разбивки на страницы.
 
-### `total` _= None_
+### total _= None_
 
 общее количество элементов, соответствующих запросу
 
