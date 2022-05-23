@@ -119,7 +119,7 @@ class Book(db.Model):
     author = db.relationship("Author", backref="books")
 ```
 
-Создавайте marshmallow [Schemas](https://marshmallow.readthedocs.io/en/latest/api\_reference.html#marshmallow.Schema) из своих моделей с помощью <mark style="color:red;">SQLAlchemySchema</mark> или <mark style="color:red;">SQLAlchemyAutoSchema</mark>.
+Создавайте marshmallow [Schemas](https://marshmallow.readthedocs.io/en/latest/api\_reference.html#marshmallow.Schema) из своих моделей с помощью [SQLAlchemySchema](flask-marshmallow.md#sqlalchemyschema) или [SQLAlchemyAutoSchema](flask-marshmallow.md#sqlalchemyautoschema).
 
 ```python
 class AuthorSchema(ma.SQLAlchemySchema):
@@ -151,16 +151,16 @@ author_schema.dump(author)
 # {'id': 1, 'name': 'Chuck Paluhniuk', 'books': [1]}
 ```
 
-API-интерфейс <mark style="color:red;">SQLAlchemySchema</mark> почти идентичен [marshmallow\_sqlalchemy.SQLAlchemySchema](https://marshmallow-sqlalchemy.readthedocs.io/en/latest/api\_reference.html#marshmallow\_sqlalchemy.SQLAlchemySchema) со следующими исключениями:
+API-интерфейс [SQLAlchemySchema](flask-marshmallow.md#sqlalchemyschema) почти идентичен [marshmallow\_sqlalchemy.SQLAlchemySchema](https://marshmallow-sqlalchemy.readthedocs.io/en/latest/api\_reference.html#marshmallow\_sqlalchemy.SQLAlchemySchema) со следующими исключениями:
 
-* По умолчанию <mark style="color:red;">SQLAlchemySchema</mark> использует сеанс с ограниченной областью действия, созданный **Flask-SQLAlchemy**.
-* <mark style="color:red;">SQLAlchemySchema</mark> является подклассом <mark style="color:red;">flask\_marshmallow.Schema</mark>, поэтому он включает метод <mark style="color:red;">jsonify</mark>.
+* По умолчанию [SQLAlchemySchema](flask-marshmallow.md#sqlalchemyschema) использует сеанс с ограниченной областью действия, созданный **Flask-SQLAlchemy**.
+* [SQLAlchemySchema](flask-marshmallow.md#sqlalchemyschema) является подклассом [flask\_marshmallow.Schema](flask-marshmallow.md#schema), поэтому он включает метод [jsonify](flask-marshmallow.md#jsonify).
 
 {% hint style="info" %}
-По умолчанию метод **jsonify** во Flask сортирует список ключей и возвращает согласованные результаты, чтобы гарантировать, что внешние кэши HTTP не будут уничтожены. В качестве побочного эффекта это переопределит **ordered = True** в классе **Meta** SQLAlchemySchema (если вы его установили). Чтобы отключить это, установите **JSON\_SORT\_KEYS=False** в конфигурации вашего приложения Flask. В производственной среде рекомендуется разрешить **jsonify** сортировать ключи, а не устанавливать в <mark style="color:red;">SQLAlchemySchema</mark> **ordered=True**, чтобы минимизировать время генерации и максимизировать кешируемость результатов.
+По умолчанию метод **jsonify** во Flask сортирует список ключей и возвращает согласованные результаты, чтобы гарантировать, что внешние кэши HTTP не будут уничтожены. В качестве побочного эффекта это переопределит **ordered = True** в классе **Meta** SQLAlchemySchema (если вы его установили). Чтобы отключить это, установите **JSON\_SORT\_KEYS=False** в конфигурации вашего приложения Flask. В производственной среде рекомендуется разрешить **jsonify** сортировать ключи, а не устанавливать в [SQLAlchemySchema](flask-marshmallow.md#sqlalchemyschema) **ordered=True**, чтобы минимизировать время генерации и максимизировать кешируемость результатов.
 {% endhint %}
 
-Вы также можете использовать поля <mark style="color:red;">ma.HyperlinkRelated</mark>, если хотите, чтобы отношения были представлены гиперссылками, а не первичными ключами.
+Вы также можете использовать поля [ma.HyperlinkRelated](flask-marshmallow.md#hyperlinkrelated), если хотите, чтобы отношения были представлены гиперссылками, а не первичными ключами.
 
 ```python
 class BookSchema(ma.SQLAlchemyAutoSchema):
@@ -176,9 +176,9 @@ with app.test_request_context():
 # {'id': 1, 'title': 'Fight Club', 'author': '/authors/1'}
 ```
 
-Первым аргументом конструктора <mark style="color:red;">HyperlinkRelated</mark> является имя представления, используемого для создания URL-адреса, точно так же, как вы передаете его функции [url\_for](https://flask.palletsprojects.com/en/2.0.x/api/#flask.url\_for). Если ваши модели и представления используют атрибут **id** в качестве первичного ключа, все готово; в противном случае необходимо указать имя атрибута, используемого в качестве первичного ключа.
+Первым аргументом конструктора [HyperlinkRelated](flask-marshmallow.md#hyperlinkrelated) является имя представления, используемого для создания URL-адреса, точно так же, как вы передаете его функции [url\_for](https://flask.palletsprojects.com/en/2.0.x/api/#flask.url\_for). Если ваши модели и представления используют атрибут **id** в качестве первичного ключа, все готово; в противном случае необходимо указать имя атрибута, используемого в качестве первичного ключа.
 
-Чтобы представить отношение «один ко многим», оберните экземпляр <mark style="color:red;">HyperlinkRelated</mark> в поле [marshmallow.fields.List](https://marshmallow.readthedocs.io/en/latest/marshmallow.fields.html#marshmallow.fields.List), например:
+Чтобы представить отношение «один ко многим», оберните экземпляр [HyperlinkRelated](flask-marshmallow.md#hyperlinkrelated) в поле [marshmallow.fields.List](https://marshmallow.readthedocs.io/en/latest/marshmallow.fields.html#marshmallow.fields.List), например:
 
 ```python
 class AuthorSchema(ma.SQLAlchemyAutoSchema):
@@ -215,7 +215,7 @@ app = Flask(__name__)
 ma = Marshmallow(app)
 ```
 
-Объект предоставляет доступ к классу <mark style="color:red;">Schema</mark>, всем полям в [marshmallow.fields](https://marshmallow.readthedocs.io/en/latest/marshmallow.fields.html#module-marshmallow.fields), а также полям, специфичным для Flask, в [flask\_marshmallow.fields](flask-marshmallow.md#flask\_marshmallow.fields).
+Объект предоставляет доступ к классу [Schema](flask-marshmallow.md#schema), всем полям в [marshmallow.fields](https://marshmallow.readthedocs.io/en/latest/marshmallow.fields.html#module-marshmallow.fields), а также полям, специфичным для Flask, в [flask\_marshmallow.fields](flask-marshmallow.md#flask\_marshmallow.fields).
 
 Вы можете объявить схему следующим образом:
 
@@ -311,7 +311,7 @@ _<mark style="color:orange;">Устарело</mark>, начиная с верс
 
 #### _class_ flask\_marshmallow.fields.Hyperlinks(_schema_, _\*\*kwargs_)
 
-Поле, которое выводит словарь гиперссылок, учитывая схему словаря с объектами <mark style="color:red;">URLFor</mark> в качестве значений.
+Поле, которое выводит словарь гиперссылок, учитывая схему словаря с объектами [URLFor](flask-marshmallow.md#urlfor) в качестве значений.
 
 Пример:
 
