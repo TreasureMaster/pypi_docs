@@ -128,6 +128,7 @@
     * [Описание Flask-Caching](veb-freimovorki/flask-rasshireniya/flask-caching/opisanie-flask-caching.md)
     * [API Flask-Caching](veb-freimovorki/flask-rasshireniya/flask-caching/api-flask-caching.md)
     * [Доп. информация Flask-Caching](veb-freimovorki/flask-rasshireniya/flask-caching/dop.-informaciya-flask-caching.md)
+  * [Flask-HTTPAuth](veb-freimovorki/flask-rasshireniya/flask-httpauth.md)
   * [Flask-Mail](veb-freimovorki/flask-rasshireniya/flask-mail/README.md)
     * [User's Guide Flask-Mail](veb-freimovorki/flask-rasshireniya/flask-mail/users-guide-flask-mail.md)
     * [API Flask-Mail](veb-freimovorki/flask-rasshireniya/flask-mail/api-flask-mail.md)
