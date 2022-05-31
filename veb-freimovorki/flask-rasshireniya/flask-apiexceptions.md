@@ -176,3 +176,84 @@ def testing():
     #     {"code": "invalid-data", "message": "The phone number does not exist.", "info": {"area_code": "444"}}
     # ]}
 ```
+
+Если вы хотите, чтобы в **ApiException** была создана только одна ошибка **error**, это можно сделать с помощью конструктора последнего в виде сокращения:
+
+```python
+exc = ApiException(
+    status_code=400,
+    code='invalid-data',
+    message='The address provided is invalid',
+    info={'zip_code': '90210'})
+```
+
+что эквивалентно:
+
+```python
+exc = ApiException(status_code=400)
+error=ApiError(
+    code='invalid-data',
+    message='The address provided is invalid',
+    info={'zip_code': '90210'}))
+
+exc.add_error(error)
+```
+
+Полезным шаблоном является создание подкласса **ApiException** в явно полезные типы исключений, для которых вы можете определить атрибуты уровня класса по умолчанию, которые будут использоваться для заполнения правильного объекта ошибки **error** при создании экземпляра. Например:
+
+```python
+class MissingResourceError(ApiException):
+    status_code = 404
+    message = "No such resource exists."
+    code = 'not-found'
+
+# ...
+
+@app.route('/posts/<int:post_id>')
+def post_by_id(post_id):
+    """Получить один пост по идентификатору из базы данных."""
+
+    post = Post.query.filter(Post.id == post_id).one_or_none()
+    if post is None:
+        raise MissingResourceError()
+
+    # Ответ 404 с телом JSON:
+    # {"errors": [
+    #     {"code": "not-found", "message": "No such resource exists."}
+    # ]}
+```
+
+Преимущество этого конкретного шаблона в том, что вы можете создавать _**семантически корректные**_ исключения в своей кодовой базе и можете обрабатывать их в стеке вызовов. Если вы их не обрабатываете, они просто передаются в обработчик исключений (если вы настроили `flask_apiexceptions.api_exception_handler` или аналогичный), зарегистрированный в **Flask**, и затем преобразуются в полезный ответ для запрашивающего клиента.
+
+```python
+class MissingResourceError(ApiException):
+    status_code = 404
+    message = "No such resource exists."
+    code = 'not-found'
+
+class Post(db.Model):
+    # ...
+    @classmethod
+    def query_by_id(cls, post_id):
+        """Запросить сообщение по id, вызвать исключение, если оно не найдено."""
+        result = cls.query.filter(cls.id == post_id).one_or_none()
+        if result is None:
+            raise MissingResourceError()
+
+        return result
+
+@app.route('/posts/<int:post_id>')
+def post_by_id(post_id):
+    """Получить один пост по ID из базы данных."""
+
+    try:
+        post = Post.query_by_id(post_id)
+    except MissingResourceError as e:
+        # Мы можем делать все, что захотим, теперь, когда мы поймали исключение.
+        # Для иллюстрации мы просто запишем это.
+        app.logger.exception("Could not locate post!")
+
+        # Будет всплывать исключение до тех пор,
+        # пока оно не будет преобразовано в JSON для клиента.
+        raise e
+```
