@@ -112,6 +112,7 @@
     * [Как внести свой вклад в Flask](veb-freimovorki/flask-1/dopolnitelnye-primechaniya-flask/kak-vnesti-svoi-vklad-v-flask.md)
   * [Оглавление Flask ?](veb-freimovorki/flask-1/flask.md)
 * [Flask расширения](veb-freimovorki/flask-rasshireniya/README.md)
+  * [Flask-ApiExceptions](veb-freimovorki/flask-rasshireniya/flask-apiexceptions.md)
   * [Flask-AppConfig](veb-freimovorki/flask-rasshireniya/flask-appconfig.md)
   * [Flask-Bootstrap](veb-freimovorki/flask-rasshireniya/flask-bootstrap/README.md)
     * [Основы использования](veb-freimovorki/flask-rasshireniya/flask-bootstrap/osnovy-ispolzovaniya.md)
