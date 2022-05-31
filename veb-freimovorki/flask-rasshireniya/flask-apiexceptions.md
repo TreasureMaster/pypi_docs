@@ -110,3 +110,69 @@ assert json.loads(rv.data)['data'] == CaffeineError.special
 Кстати, именно так вы можете использовать тип содержимого ответа, отличный от `application/json`. Просто создайте свой собственный объект ответа вместо использования `jsonify()` в вашем обработчике, если он выдает действительный ответ в качестве возвращаемого значения.
 
 ## Использование объектов ApiException и ApiError
+
+**Flask-ApiExceptions** включает в себя несколько удобных классов и метод-обработчик для настройки структурированных ответов API на ошибки. Они совершенно необязательны, но предоставляют некоторые разумные значения по умолчанию, которые должны охватывать большинство ситуаций.
+
+Экземпляр **ApiException** упаковывает один или несколько экземпляров **ApiError**. В этом смысле **ApiException** — это просто контейнер для фактического сообщения об ошибке. Экземпляр **ApiError** принимает необязательные атрибуты **code**, **message** и **info**.
+
+Идея состоит в том, что **code** должен быть идентификатором типа ошибки, например, **invalid-data** или **does-not-exist**. Поле **message** должно содержать более подробное и точное описание ошибки. Информационное поле **info** может использоваться для любых дополнительных метаданных или неструктурированной информации, которые могут потребоваться.
+
+Информационное поле **info**, если оно используется, должно содержать данные, сериализуемые в формате JSON.
+
+Чтобы использовать эти конструкции, вам необходимо зарегистрировать соответствующий класс исключений, а также **api\_exception\_handler**, предназначенный именно для этой цели:
+
+```python
+from flask_apiexceptions import (
+    JSONExceptionHandler, ApiException, ApiError, api_exception_handler)
+
+app = Flask(__name__)
+ext = JSONExceptionHandler(app)
+ext.register(code_or_exception=ApiException, handler=api_exception_handler)
+
+@app.route('/custom')
+def testing():
+    error = ApiError(code='teapot', message='I am a little teapot.')
+    raise ApiException(status_code=418, error=error)
+
+with app.app_context():
+    with app.test_client() as c:
+        rv = c.get('/custom')
+
+        # Ответ JSON выглядит так...
+        # {"errors": [{"code": "teapot", "message": "I am a little teapot."}]}
+
+assert rv.status_code == 418
+assert rv.headers['content-type'] == 'application/json'
+
+json_data = json.loads(rv.data)
+assert json_data['errors'][0]['message'] == 'I am a little teapot.'
+assert json_data['errors'][0]['code'] == 'teapot'
+assert json_data['errors'][0]['info'] is None
+```
+
+Обратите внимание, что при использовании классов **ApiException** и **ApiError** код состояния устанавливается для экземпляра **ApiException**. Это имеет больше смысла, когда вы можете установить несколько объектов **ApiError** для одного и того же **ApiException**:
+
+```python
+from flask_apiexceptions import ApiException, ApiError
+
+# ...
+
+@app.route('/testing')
+def testing():
+    exc = ApiException(status_code=400)
+    invalid_address_error = ApiError(code='invalid-data',
+                                     message='The address provided is invalid.')
+    invalid_phone_error = ApiError(code='invalid-data',
+                                   message='The phone number does not exist.',
+                                   info={'area_code': '555'})
+    exc.add_error(invalid_address_error)
+    exc.add_error(invalid_phone_error)
+
+    raise exc
+
+    # Формат ответа JSON:
+    # {"errors": [
+    #     {"code": "invalid-data", "message": "The address provided is invalid."},
+    #     {"code": "invalid-data", "message": "The phone number does not exist.", "info": {"area_code": "444"}}
+    # ]}
+```
