@@ -95,4 +95,58 @@ $ flask db init --multidb
 
 ### Справочник по командам
 
+**Flask-Migrate** предоставляет один класс под названием **Migrate**. Этот класс содержит всю функциональность расширения.
+
+В следующем примере расширение инициализируется стандартным интерфейсом командной строки **Flask**:
+
+```python
+from flask_migrate import Migrate
+migrate = Migrate(app, db)
+```
+
+Двумя аргументами **Migrate** являются экземпляр приложения и экземпляр базы данных **Flask-SQLAlchemy**. Конструктор **Migrate** также принимает дополнительные ключевые аргументы, которые передаются в метод **Alembic** `EnvironmentContext.configure()`. Стандартно для всех расширений **Flask**, **Flask-Migrate** также можно инициализировать с помощью метода **init\_app**:
+
+```python
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+db = SQLAlchemy()
+migrate = Migrate()
+
+def create_app():
+     """Application-factory pattern"""
+     ...
+     ...
+     db.init_app(app)
+     migrate.init_app(app, db)
+     ...
+     ...
+     return app
+```
+
+После инициализации расширения к параметрам командной строки будет добавлена группа **db** с несколькими подкомандами. Ниже приведен список доступных подкоманд:
+
+* `flask db --help` - Показывает список доступных команд.
+* `flask db list-templates` - Показывает список доступных шаблонов репозитория базы данных.
+* `flask db init [--multidb] [--template TEMPLATE] [--package]` - Инициализирует поддержку миграции для приложения. Необязательный параметр `--multidb` включает миграцию для нескольких баз данных, настроенных как привязки [Flask-SQLAlchemy binds](http://flask-sqlalchemy.pocoo.org/binds/). Параметр `--template` позволяет вам явно выбрать шаблон репозитория базы данных либо из стандартных шаблонов, предоставляемых этим пакетом, либо из пользовательского шаблона, заданного как путь к каталогу шаблона. Параметр `--package` указывает **Alembic** добавить файлы `__init__.py` в каталоги миграции и версии.
+* `flask db revision [--message MESSAGE] [--autogenerate] [--sql] [--head HEAD] [--splice] [--branch-label BRANCH_LABEL] [--version-path VERSION_PATH] [--rev-id REV_ID]` - Создает пустой скрипт ревизии. Сценарий нужно редактировать _**вручную**_ с изменениями **upgrade** и **downgrade**. Инструкции по написанию сценариев миграции см. в [документации Alembic](http://alembic.zzzcomputing.com/en/latest/index.html). Может быть включено необязательное сообщение **message** о миграции.
+* `flask db migrate [--message MESSAGE] [--sql] [--head HEAD] [--splice] [--branch-label BRANCH_LABEL] [--version-path VERSION_PATH] [--rev-id REV_ID]` - Эквивалент `revision --autogenerate`. Сценарий миграции заполняется изменениями, обнаруженными автоматически. Сгенерированный сценарий необходимо просмотреть и отредактировать, так как не все типы изменений могут быть обнаружены автоматически. Эта команда не вносит никаких изменений в базу данных, а просто создает сценарий ревизии.
+* `flask db edit <revision>` - Редактирует сценарий ревизии с помощью **$EDITOR**.
+* `flask db upgrade [--sql] [--tag TAG] [--x-arg ARG] <revision>` - Обновляет базу данных. Если **revision** не указан, предполагается `"head"`.
+* `flask db downgrade [--sql] [--tag TAG] [--x-arg ARG] <revision>` - Понижает базу данных. Если **revision** не указан, предполагается `-1`.
+* `flask db stamp [--sql] [--tag TAG] <revision>` - Устанавливает ревизию в базе данных на ту, которая указана в качестве аргумента, без выполнения каких-либо миграций.
+* `flask db current [--verbose]` - Показывает текущую версию базы данных.
+* `flask db history [--rev-range REV_RANGE] [--verbose]` - Показывает список миграций. Если диапазон не указан, отображается вся история.
+* `flask db show <revision>` - Показать ревизию, обозначенную данным символом.
+* `flask db merge [--message MESSAGE] [--branch-label BRANCH_LABEL] [--rev-id REV_ID] <revisions>` - Объедините две ревизии вместе. Создает новый файл ревизии.
+* `flask db heads [--verbose] [--resolve-dependencies]` - Показать текущие доступные головы **heads** в каталоге сценария ревизии.
+* `flask db branches [--verbose]` - Показать текущие точки ветвления.
+
+#### Примечания:
+
+* Все команды также принимают параметр `--directory DIRECTORY`, указывающий на каталог, содержащий сценарии миграции. Если этот аргумент опущен, используется каталог **migrations**.
+* Каталог по умолчанию также можно указать в качестве аргумента **directory** для конструктора **Migrate**.
+* Параметр `--sql`, присутствующий в нескольких командах, выполняет миграцию в автономном (_offline_) режиме. Вместо выполнения команд базы данных операторы SQL, которые необходимо выполнить, они выводятся на консоль.
+* Подробную документацию по этим командам можно найти на [странице справочника по командам Alembic](http://alembic.zzzcomputing.com/en/latest/api/commands.html).
+
 ### Справочник API
