@@ -150,3 +150,24 @@ def create_app():
 * Подробную документацию по этим командам можно найти на [странице справочника по командам Alembic](http://alembic.zzzcomputing.com/en/latest/api/commands.html).
 
 ### Справочник API
+
+Доступ к командам, предоставляемым интерфейсом командной строки **Flask-Migrate**, также можно получить программно, импортировав функции из модуля **flask\_migrate**. Доступные функции:
+
+* `init(directory='migrations', multidb=False)` - Инициализирует поддержку миграции для приложения.
+* `revision(directory='migrations', message=None, autogenerate=False, sql=False, head='head', splice=False, branch_label=None, version_path=None, rev_id=None)` - Создает пустой скрипт ревизии.
+* `migrate(directory='migrations', message=None, sql=False, head='head', splice=False, branch_label=None, version_path=None, rev_id=None)` - Создает сценарий автоматической ревизии.
+* `edit(directory='migrations', revision='head')` - Отредактируйте скрипт(ы) редакции с помощью **$EDITOR**.
+* `merge(directory='migrations', revisions='', message=None, branch_label=None, rev_id=None)` - Объединяет две ревизии вместе. Создает новый файл миграции.
+* `upgrade(directory='migrations', revision='head', sql=False, tag=None)` - Обновляет базу данных.
+* `downgrade(directory='migrations', revision='-1', sql=False, tag=None)` - Понижает базу данных.
+* `show(directory='migrations', revision='head')` - Показать ревизию, обозначенную данным символом.
+* `history(directory='migrations', rev_range=None, verbose=False)` - Показывает список миграций. Если диапазон не указан, отображается вся история.
+* `heads(directory='migrations', verbose=False, resolve_dependencies=False)` - Показать текущие доступные головы **heads** в каталоге скриптов.
+* `branches(directory='migrations', verbose=False)` - Показать текущие точки ветвления
+* `current(directory='migrations', verbose=False, head_only=False)` - Показывает текущую версию базы данных.
+* `stamp(directory='migrations', revision='head', sql=False, tag=None)` - Устанавливает ревизию в базе данных на ту, которая указана в качестве аргумента, без выполнения каких-либо миграций.
+
+#### Примечания:
+
+* Эти команды будут вызывать те же функции, что и из командной строки, включая вывод на терминал. Конфигурация регистрации процесса будет переопределена **Alembic** в соответствии с содержимым файла `alembic.ini`.
+* Для большей гибкости сценариев вы также можете напрямую использовать API, предоставленный **Alembic**.
