@@ -354,3 +354,13 @@
   * [Синтаксис YAML](vspomogatelnye-pakety/pyyaml/sintaksis-yaml.md)
   * [Теги YAML и типы Python](vspomogatelnye-pakety/pyyaml/tegi-yaml-i-tipy-python.md)
 * [Резерв 2](vspomogatelnye-pakety/rezerv-2.md)
+
+## Базы данных
+
+* [clickhouse-sqlalchemy](bazy-dannykh/clickhouse-sqlalchemy/README.md)
+  * [Установка ch-sa](bazy-dannykh/clickhouse-sqlalchemy/ustanovka-ch-sa.md)
+  * [Быстрый старт ch-sa](bazy-dannykh/clickhouse-sqlalchemy/bystryi-start-ch-sa.md)
+  * [Настройка соединения ch-sa](bazy-dannykh/clickhouse-sqlalchemy/nastroika-soedineniya-ch-sa.md)
+  * [Особенности ch-sa](bazy-dannykh/clickhouse-sqlalchemy/osobennosti-ch-sa.md)
+  * [Типы ch-sa](bazy-dannykh/clickhouse-sqlalchemy/tipy-ch-sa.md)
+  * [Миграции ch-sa](bazy-dannykh/clickhouse-sqlalchemy/migracii-ch-sa.md)
