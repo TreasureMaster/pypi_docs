@@ -367,3 +367,5 @@
   * [Особенности ch-sa](bazy-dannykh/clickhouse-sqlalchemy/osobennosti-ch-sa.md)
   * [Типы ch-sa](bazy-dannykh/clickhouse-sqlalchemy/tipy-ch-sa.md)
   * [Миграции ch-sa](bazy-dannykh/clickhouse-sqlalchemy/migracii-ch-sa.md)
+* [psycopg2](bazy-dannykh/psycopg2/README.md)
+  * [Содержание модуля psycopg2](bazy-dannykh/psycopg2/soderzhanie-modulya-psycopg2.md)
